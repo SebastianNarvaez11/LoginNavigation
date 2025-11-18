@@ -11,7 +11,7 @@ import com.sebastiannarvaez.loginnavigationapp.feature.posts.presentation.detail
 fun NavGraphBuilder.mainGraph(navController: NavController, authVM: AuthViewModel) {
     authComposable<Destinations.Home>(navController, authVM) {
         HomeScreen(
-            navigateToDetail = { id -> navController.navigate(Destinations.PostDetail(id)) },
+            navigateToPostDetail = { id -> navController.navigate(Destinations.PostDetail(id)) },
             logout = { authVM.logout() }
         )
     }

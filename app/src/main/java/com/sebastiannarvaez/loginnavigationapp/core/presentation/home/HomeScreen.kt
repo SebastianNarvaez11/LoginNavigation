@@ -18,7 +18,7 @@ import com.sebastiannarvaez.loginnavigationapp.feature.posts.presentation.compon
 
 @Composable
 fun HomeScreen(
-    navigateToDetail: (id: String) -> Unit,
+    navigateToPostDetail: (id: String) -> Unit,
     logout: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
@@ -30,10 +30,6 @@ fun HomeScreen(
 
     Column() {
         Text(text = "Home screen")
-
-        Button(onClick = { navigateToDetail("123") }) {
-            Text("ir a Detalle")
-        }
 
         Button(onClick = { viewModel.getPost() }) {
             if (uiState.isLoadingPost) {
@@ -53,7 +49,7 @@ fun HomeScreen(
 
         LazyColumn() {
             items(uiState.posts, key = { it.id }) { post ->
-                PostItem(post)
+                PostItem(post = post) { post -> navigateToPostDetail(post.id) }
             }
         }
     }
