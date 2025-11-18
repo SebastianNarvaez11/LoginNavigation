@@ -11,12 +11,12 @@ import com.sebastiannarvaez.loginnavigationapp.feature.posts.presentation.detail
 fun NavGraphBuilder.mainGraph(navController: NavController, authVM: AuthViewModel) {
     authComposable<Destinations.Home>(navController, authVM) {
         HomeScreen(
-            navigateToDetail = { id -> navController.navigate(Destinations.Detail(id)) },
+            navigateToDetail = { id -> navController.navigate(Destinations.PostDetail(id)) },
             logout = { authVM.logout() }
         )
     }
 
-    authComposable<Destinations.Detail>(navController, authVM) { navBackStackEntry ->
+    authComposable<Destinations.PostDetail>(navController, authVM) { navBackStackEntry ->
         val id = navBackStackEntry.toRoute<Destinations.PostDetail>().id
         PostDetailScreen(navigateBack = { navController.popBackStack() }, id)
     }
