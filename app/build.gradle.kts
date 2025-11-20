@@ -88,6 +88,11 @@ dependencies {
     //complementos de retrofit para la conversion de datos que llegan desde las apis
     implementation(libs.retrofit.adapter)
 
+    //room
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

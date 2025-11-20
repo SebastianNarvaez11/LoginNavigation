@@ -2,7 +2,7 @@ package com.sebastiannarvaez.loginnavigationapp.core.di
 
 import com.sebastiannarvaez.loginnavigationapp.feature.auth.data.repository.AuthRepositoryImp
 import com.sebastiannarvaez.loginnavigationapp.feature.auth.domain.repository.AuthRepository
-import com.sebastiannarvaez.loginnavigationapp.feature.posts.data.remote.repository.PostRepositoryImp
+import com.sebastiannarvaez.loginnavigationapp.feature.posts.data.repository.PostRepositoryImp
 import com.sebastiannarvaez.loginnavigationapp.feature.posts.domain.repository.PostRepository
 import dagger.Binds
 import dagger.Module

@@ -1,6 +1,6 @@
 package com.sebastiannarvaez.loginnavigationapp.feature.posts.domain.models
 
-data class PostModel(
+data class PostDetailModel(
     val id: String,
     val userId: String,
     val title: String,

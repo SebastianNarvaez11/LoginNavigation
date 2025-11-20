@@ -5,17 +5,15 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.sebastiannarvaez.loginnavigationapp.feature.posts.domain.models.PostModel
+import com.sebastiannarvaez.loginnavigationapp.feature.posts.domain.models.SimplePostModel
 
 @Composable
 fun PostItem(
     modifier: Modifier = Modifier,
-    post: PostModel,
-    onPress: (post: PostModel) -> Unit,
+    post: SimplePostModel,
+    onPress: (post: SimplePostModel) -> Unit,
 ) {
     Column(modifier = modifier.clickable { onPress(post) }) {
         Text(text = post.title)
-        Text(text = post.content)
-        Text(text = post.createdAt)
     }
 }

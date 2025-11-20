@@ -1,6 +1,5 @@
 package com.sebastiannarvaez.loginnavigationapp.core.presentation.home
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -8,12 +7,10 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.sebastiannarvaez.loginnavigationapp.feature.posts.domain.models.PostModel
 import com.sebastiannarvaez.loginnavigationapp.feature.posts.presentation.components.PostItem
 
 @Composable
@@ -24,11 +21,7 @@ fun HomeScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(Unit) {
-        Log.i("HomeScreen", "se cargo la HomeScreen")
-    }
-
-    Column() {
+    Column {
         Text(text = "Home screen")
 
         Button(onClick = { viewModel.getPost() }) {
@@ -47,7 +40,7 @@ fun HomeScreen(
             Text(text = "${uiState.error}")
         }
 
-        LazyColumn() {
+        LazyColumn {
             items(uiState.posts, key = { it.id }) { post ->
                 PostItem(post = post) { post -> navigateToPostDetail(post.id) }
             }

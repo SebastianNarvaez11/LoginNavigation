@@ -9,9 +9,14 @@ lifecycleRuntimeKtx = "2.9.4"
 activityCompose = "1.11.0"
 composeBom = "2024.09.00"
 
+
+#Navegacion
 navigationCompose = "2.9.6"
+
+#serializacion y parseo
 kotlinSerialization = "1.8.1"
 
+#llamdas a api
 retrofit = "3.0.0"
 
 #DI dagger hilt
@@ -23,6 +28,9 @@ ksp = "2.1.21-2.0.1"
 
 #datastore
 datastorePreferences = "1.1.7"
+
+#room
+roomRuntime = "2.8.3"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -53,6 +61,9 @@ androidx-datastore-preferences = { module = "androidx.datastore:datastore-prefer
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-adapter = {module = "com.squareup.retrofit2:converter-kotlinx-serialization", version.ref = "retrofit"}
 
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
+androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomRuntime" }
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
