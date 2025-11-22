@@ -1,7 +1,5 @@
 package com.sebastiannarvaez.loginnavigationapp.feature.auth.presentation.navigation
 
-import androidx.compose.material3.SnackbarHostState
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable

@@ -33,7 +33,6 @@ val topLevelDestinations = listOf(
     Destinations.Profile::class
 )
 
-
 sealed class BottomBarItem(
     val route: Destinations,
     val title: String,

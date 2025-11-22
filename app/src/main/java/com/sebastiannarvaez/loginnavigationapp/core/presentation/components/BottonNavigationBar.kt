@@ -14,7 +14,7 @@ import com.sebastiannarvaez.loginnavigationapp.core.presentation.navigation.Dest
 
 @Composable
 fun BottomNavigationBar(navController: NavController, currentDestination: NavDestination?) {
-    NavigationBar() {
+    NavigationBar {
         val bottomBarItems: List<BottomBarItem> = listOf(BottomBarItem.Home, BottomBarItem.Profile)
 
         bottomBarItems.forEach { item ->

@@ -42,24 +42,36 @@ class PostDetailViewModel @Inject constructor(
         )
 
     init {
-        fetchPost()
+        fetchPost(initialLoad = true)
     }
 
-    private fun fetchPost() {
-        _uiState.update { it.copy(isFetchingPost = true) }
+    fun fetchPost(initialLoad: Boolean = false) {
+
+        if (initialLoad) {
+            _uiState.update { it.copy(isFetchingPost = true) }
+        } else {
+            _uiState.update { it.copy(isRefetching = true) }
+        }
 
         viewModelScope.launch {
             delay(2000)
 
             getPostByIdAndCachedUseCase(postId)
                 .onSuccess {
-                    _uiState.update { it.copy(isFetchingPost = false) }
+                    _uiState.update {
+                        it.copy(
+                            isFetchingPost = false,
+                            isRefetching = false,
+                            error = null
+                        )
+                    }
                 }
                 .onFailure { e ->
                     _uiState.update {
                         it.copy(
                             error = e.message ?: "error al actualizar el post",
-                            isFetchingPost = false
+                            isFetchingPost = false,
+                            isRefetching = false
                         )
                     }
                 }

@@ -1,5 +1,8 @@
 package com.sebastiannarvaez.loginnavigationapp.core.presentation.navigation
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -7,7 +10,6 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -16,7 +18,6 @@ import com.sebastiannarvaez.loginnavigationapp.core.presentation.components.Bott
 import com.sebastiannarvaez.loginnavigationapp.feature.auth.presentation.AuthStatus
 import com.sebastiannarvaez.loginnavigationapp.feature.auth.presentation.AuthViewModel
 import com.sebastiannarvaez.loginnavigationapp.feature.auth.presentation.navigation.authGraph
-import kotlinx.coroutines.launch
 
 @Composable
 fun NavigationWrapper(
@@ -30,7 +31,11 @@ fun NavigationWrapper(
 
     Scaffold(
         bottomBar = {
-            if (appState.shouldShowBottomBar && authStatus == AuthStatus.Authenticated) {
+            AnimatedVisibility(
+                visible = appState.shouldShowBottomBar && authStatus == AuthStatus.Authenticated,
+                enter = slideInVertically(initialOffsetY = { it }),
+                exit = slideOutVertically(targetOffsetY = { it }),
+            ) {
                 BottomNavigationBar(navController, navController.currentDestination)
             }
         },

@@ -19,10 +19,27 @@
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.LoginNavigationApp">
+
+            <!--  Intent original, es el encargado de abrir la app y poner el icono de la app en home del dispositivo          -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <!-- Intent para manejar los deep links que llegan desde el dominio www.sebastian.com           -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="https" />
+                <data android:host="www.sebastian.com" />
+                <data android:pathPrefix="/posts" /> <!--    prefijo para aceptar solo que sea    https://www.sebastian.com/posts        -->
+
+                <!--                <data android:pathPrefix="/profile" /> se pueden tener mas pathPrefix -->
+                <!--                <data android:pathPrefix="/settings" /> se pueden tener mas pathPrefix  -->
             </intent-filter>
         </activity>
     </application>
