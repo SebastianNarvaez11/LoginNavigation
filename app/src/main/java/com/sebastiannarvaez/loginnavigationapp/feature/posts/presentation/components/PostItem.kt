@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
@@ -22,9 +23,9 @@ fun PostItem(
 ) {
     Column(
         modifier = modifier
-            .padding(horizontal = 16.dp, vertical = 5.dp)
             .clip(shape = RoundedCornerShape(10.dp))
             .fillMaxWidth()
+            .height(250.dp)
             .background(MaterialTheme.colorScheme.inversePrimary)
             .clickable { onPress(post) }
             .padding(10.dp)

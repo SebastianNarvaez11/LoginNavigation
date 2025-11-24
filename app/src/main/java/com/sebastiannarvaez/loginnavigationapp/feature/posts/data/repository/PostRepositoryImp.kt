@@ -1,5 +1,8 @@
 package com.sebastiannarvaez.loginnavigationapp.feature.posts.data.repository
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.sebastiannarvaez.loginnavigationapp.core.domain.models.DomainError
 import com.sebastiannarvaez.loginnavigationapp.feature.posts.data.local.dao.PostDao
 import com.sebastiannarvaez.loginnavigationapp.feature.posts.data.local.entity.toDomain
@@ -7,6 +10,7 @@ import com.sebastiannarvaez.loginnavigationapp.feature.posts.data.remote.api.Pos
 import com.sebastiannarvaez.loginnavigationapp.feature.posts.data.remote.response.PostDetailDTO
 import com.sebastiannarvaez.loginnavigationapp.feature.posts.data.remote.response.toDomain
 import com.sebastiannarvaez.loginnavigationapp.feature.posts.data.remote.response.toEntity
+import com.sebastiannarvaez.loginnavigationapp.feature.posts.data.remote.utils.PostPagingSource
 import com.sebastiannarvaez.loginnavigationapp.feature.posts.domain.models.PostDetailModel
 import com.sebastiannarvaez.loginnavigationapp.feature.posts.domain.models.SimplePostModel
 import com.sebastiannarvaez.loginnavigationapp.feature.posts.domain.repository.PostRepository
@@ -27,6 +31,17 @@ class PostRepositoryImp @Inject constructor(
         } catch (e: Exception) {
             return Result.failure(errorMapper.map(e))
         }
+    }
+
+    override fun getPostPaging(): Flow<PagingData<SimplePostModel>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 5, // Cuantos items traer por petición
+                prefetchDistance = 1,// Cargar más cuando falten 2 items para el final
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = { PostPagingSource(postApi) }
+        ).flow
     }
 
     override suspend fun getPostByIdAndCached(postId: String): Result<Unit> {

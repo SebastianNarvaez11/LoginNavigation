@@ -11,6 +11,13 @@ interface PostApiService {
         @Query(value = "select", encoded = true) select: String = "id,title"
     ): List<SimplePostDTO>
 
+    @GET("/rest/v1/posts") //rest/v1/posts?select=*"
+    suspend fun getPostPaging(
+        @Query(value = "select", encoded = true) select: String = "id,title",
+        @Query(value = "limit") limit: Int,
+        @Query(value = "offset") offset: Int
+    ): List<SimplePostDTO>
+
     @GET("/rest/v1/posts") ///rest/v1/posts?id=eq.1&select=*"
     suspend fun getPostById(
         @Query(value = "id", encoded = true) id: String,
