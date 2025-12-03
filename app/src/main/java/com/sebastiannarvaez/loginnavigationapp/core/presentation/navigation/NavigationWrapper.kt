@@ -3,7 +3,10 @@ package com.sebastiannarvaez.loginnavigationapp.core.presentation.navigation
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -43,15 +46,22 @@ fun NavigationWrapper(
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = Destinations.Home,
-            modifier = Modifier.padding(innerPadding)
+            startDestination = Destinations.Expenses,
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background)
         ) {
             authGraph(
                 navController = navController,
                 onShowSnackbar = { snackbarHostState.showSnackbar(it) }
             )
 
-            mainGraph(navController, authVM)
+            mainGraph(
+                navController = navController,
+                onShowSnackbar = { snackbarHostState.showSnackbar(it) },
+                authVM = authVM
+            )
         }
     }
 }

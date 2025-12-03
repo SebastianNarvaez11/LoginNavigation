@@ -1,6 +1,7 @@
 package com.sebastiannarvaez.loginnavigationapp.core.di
 
 import com.sebastiannarvaez.loginnavigationapp.feature.auth.data.remote.api.AuthApiService
+import com.sebastiannarvaez.loginnavigationapp.feature.expenses.data.remote.api.WalletsApiService
 import com.sebastiannarvaez.loginnavigationapp.feature.posts.data.remote.api.PostApiService
 import dagger.Module
 import dagger.Provides
@@ -22,5 +23,11 @@ object ApiServiceModule {
     @Singleton
     fun providePostApiService(@PrivateApi retrofit: Retrofit): PostApiService {
         return retrofit.create(PostApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideExpenseApiService(@PrivateApi retrofit: Retrofit): WalletsApiService {
+        return retrofit.create(WalletsApiService::class.java)
     }
 }

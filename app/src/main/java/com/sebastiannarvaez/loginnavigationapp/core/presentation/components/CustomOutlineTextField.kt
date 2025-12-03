@@ -1,6 +1,7 @@
 package com.sebastiannarvaez.loginnavigationapp.core.presentation.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -21,7 +22,8 @@ fun CustomOutlineTextField(
     placeholder: String = "",
     isError: Boolean,
     supportingText: String?,
-    onFocusChanged: (() -> Unit)? = null
+    onFocusChanged: (() -> Unit)? = null,
+    keyboardOptions: KeyboardOptions = KeyboardOptions()
 ) {
     var hadFocus by remember { mutableStateOf(false) }
 
@@ -43,6 +45,7 @@ fun CustomOutlineTextField(
                 Text(supportingText)
             }
         },
+        keyboardOptions = keyboardOptions,
         textStyle = TextStyle(color = MaterialTheme.colorScheme.onBackground)
     )
 }

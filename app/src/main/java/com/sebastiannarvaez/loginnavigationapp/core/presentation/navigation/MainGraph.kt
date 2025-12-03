@@ -4,15 +4,33 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.navDeepLink
 import com.sebastiannarvaez.loginnavigationapp.core.presentation.home.HomeScreen
+import com.sebastiannarvaez.loginnavigationapp.feature.posts.presentation.post.PostScreen
 import com.sebastiannarvaez.loginnavigationapp.core.presentation.screens.ProfileScreen
 import com.sebastiannarvaez.loginnavigationapp.feature.auth.presentation.AuthViewModel
+import com.sebastiannarvaez.loginnavigationapp.feature.expenses.presentation.ExpensesHomeScreen
 import com.sebastiannarvaez.loginnavigationapp.feature.posts.presentation.detail.PostDetailScreen
 
 
-fun NavGraphBuilder.mainGraph(navController: NavController, authVM: AuthViewModel) {
+fun NavGraphBuilder.mainGraph(
+    navController: NavController,
+    authVM: AuthViewModel,
+    onShowSnackbar: suspend (message: String) -> Unit
+) {
 
     authComposable<Destinations.Home>(navController, authVM) {
         HomeScreen(
+            onNavigateToExpenses = { navController.navigate(Destinations.Expenses) }
+        )
+    }
+
+    authComposable<Destinations.Expenses>(navController, authVM) {
+        ExpensesHomeScreen(
+            onShowSnackbar = onShowSnackbar,
+        )
+    }
+
+    authComposable<Destinations.Posts>(navController, authVM) {
+        PostScreen(
             navigateToPostDetail = { id -> navController.navigate(Destinations.PostDetail(id)) },
             logout = { authVM.logout() }
         )

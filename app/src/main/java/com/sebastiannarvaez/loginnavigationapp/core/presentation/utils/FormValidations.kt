@@ -14,3 +14,24 @@ fun validatePassword(password: String): String? {
         else -> null
     }
 }
+
+fun validateName(name: String): String? {
+    return when {
+        name.trim().isEmpty() -> "El nombre es requerido"
+        else -> null
+    }
+}
+
+fun validateBalance(input: String): String? {
+    if (input.isBlank()) return "El campo es requerido"
+
+    val number = input.toDoubleOrNull()
+
+    return when {
+        number == null -> "Ingresa un número válido"
+
+        number < 0 -> "El saldo no puede ser negativo"
+
+        else -> null
+    }
+}

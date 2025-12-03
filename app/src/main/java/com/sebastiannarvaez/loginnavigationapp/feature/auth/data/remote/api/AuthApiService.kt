@@ -4,6 +4,7 @@ import com.sebastiannarvaez.loginnavigationapp.feature.auth.data.remote.request.
 import com.sebastiannarvaez.loginnavigationapp.feature.auth.data.remote.request.RefreshTokenRequest
 import com.sebastiannarvaez.loginnavigationapp.feature.auth.data.remote.response.LoginResponseDto
 import retrofit2.http.Body
+import retrofit2.http.Headers
 import retrofit2.http.POST
 
 interface AuthApiService {

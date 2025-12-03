@@ -2,6 +2,8 @@ package com.sebastiannarvaez.loginnavigationapp.core.di
 
 import com.sebastiannarvaez.loginnavigationapp.feature.auth.data.repository.AuthRepositoryImp
 import com.sebastiannarvaez.loginnavigationapp.feature.auth.domain.repository.AuthRepository
+import com.sebastiannarvaez.loginnavigationapp.feature.expenses.data.repository.WalletsRepositoryImp
+import com.sebastiannarvaez.loginnavigationapp.feature.expenses.domain.repository.WalletsRepository
 import com.sebastiannarvaez.loginnavigationapp.feature.posts.data.repository.PostRepositoryImp
 import com.sebastiannarvaez.loginnavigationapp.feature.posts.domain.repository.PostRepository
 import dagger.Binds
@@ -21,4 +23,8 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindPostRepository(impl: PostRepositoryImp): PostRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindWalletRepository(imp: WalletsRepositoryImp): WalletsRepository
 }

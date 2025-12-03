@@ -11,11 +11,14 @@ import androidx.navigation.NavDestination.Companion.hasRoute
 import com.sebastiannarvaez.loginnavigationapp.core.presentation.navigation.BottomBarItem
 import com.sebastiannarvaez.loginnavigationapp.core.presentation.navigation.Destinations
 
-
 @Composable
 fun BottomNavigationBar(navController: NavController, currentDestination: NavDestination?) {
     NavigationBar {
-        val bottomBarItems: List<BottomBarItem> = listOf(BottomBarItem.Home, BottomBarItem.Profile)
+        val bottomBarItems: List<BottomBarItem> = listOf(
+            BottomBarItem.Home,
+            BottomBarItem.Posts,
+            BottomBarItem.Profile,
+        )
 
         bottomBarItems.forEach { item ->
             val isSelected = currentDestination?.hasRoute(item.route::class) == true
