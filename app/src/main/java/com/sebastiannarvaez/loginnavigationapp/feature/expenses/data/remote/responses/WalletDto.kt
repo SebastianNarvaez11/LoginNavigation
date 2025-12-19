@@ -18,6 +18,5 @@ fun WalletDto.toEntity(): WalletEntity {
         id = id,
         name = name,
         balance = balance,
-        createdAt = createdAt
     )
 }

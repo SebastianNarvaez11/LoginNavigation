@@ -2,7 +2,9 @@ package com.sebastiannarvaez.loginnavigationapp.core.di
 
 import com.sebastiannarvaez.loginnavigationapp.feature.auth.data.repository.AuthRepositoryImp
 import com.sebastiannarvaez.loginnavigationapp.feature.auth.domain.repository.AuthRepository
+import com.sebastiannarvaez.loginnavigationapp.feature.expenses.data.repository.BalanceRepositoryImp
 import com.sebastiannarvaez.loginnavigationapp.feature.expenses.data.repository.WalletsRepositoryImp
+import com.sebastiannarvaez.loginnavigationapp.feature.expenses.domain.repository.BalanceRepository
 import com.sebastiannarvaez.loginnavigationapp.feature.expenses.domain.repository.WalletsRepository
 import com.sebastiannarvaez.loginnavigationapp.feature.posts.data.repository.PostRepositoryImp
 import com.sebastiannarvaez.loginnavigationapp.feature.posts.domain.repository.PostRepository
@@ -27,4 +29,8 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindWalletRepository(imp: WalletsRepositoryImp): WalletsRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindBalanceRepository(imp: BalanceRepositoryImp): BalanceRepository
 }

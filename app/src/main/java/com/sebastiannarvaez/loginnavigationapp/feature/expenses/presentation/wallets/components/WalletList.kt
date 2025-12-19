@@ -29,6 +29,8 @@ import com.sebastiannarvaez.loginnavigationapp.feature.expenses.presentation.wal
 fun WalletList(
     wallets: List<WalletModel>,
     isFetchingWallets: Boolean = false,
+    isUpdatingWallet: Boolean = false,
+    updateWalletError: String? = null,
     formState: WalletFormState,
     selectedWallet: WalletModel?,
     onPressWallet: (wallet: WalletModel) -> Unit,
@@ -37,6 +39,11 @@ fun WalletList(
     onNameFocusChange: () -> Unit,
     onBalanceChange: (value: String) -> Unit,
     onBalanceFocusChange: () -> Unit,
+    onSave: () -> Unit,
+    onLongPressWallet: () -> Unit,
+    isDeleteModeActive: Boolean = false,
+    isDeletingWallet: Boolean = false,
+    onDelete: (wallet: WalletModel) -> Unit,
 ) {
 
     val configuration = LocalConfiguration.current
@@ -50,7 +57,7 @@ fun WalletList(
     )
 
     val animatedOpacity by animateFloatAsState(
-        targetValue = if (isFetchingWallets) 1f else 0f
+        targetValue = if (isFetchingWallets || isDeletingWallet) 1f else 0f
     )
 
     Column() {
@@ -84,7 +91,10 @@ fun WalletList(
                     wallet = wallet,
                     isSelected = isSelected,
                     onPressWallet = onPressWallet,
+                    onLongPressWallet = onLongPressWallet,
                     modifier = Modifier.width(animatedWidth),
+                    onDelete = onDelete,
+                    isDeleteModeActive = isDeleteModeActive,
                     content = {
                         AnimatedVisibility(isSelected) {
                             WalletForm(
@@ -95,8 +105,9 @@ fun WalletList(
                                 onNameFocusChange = onNameFocusChange,
                                 onBalanceChange = onBalanceChange,
                                 onBalanceFocusChange = onBalanceFocusChange,
-                                onSave = {},
-                                isLoading = false
+                                onSave = { onSave() },
+                                isLoading = isUpdatingWallet,
+                                error = updateWalletError,
                             )
                         }
                     }

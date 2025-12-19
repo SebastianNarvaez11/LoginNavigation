@@ -5,12 +5,16 @@ import com.sebastiannarvaez.loginnavigationapp.feature.expenses.domain.models.Wa
 data class WalletUiState(
     val selectedWallet: WalletModel? = null,
     val showAddWallet: Boolean = false,
+    val isDeleteModeActive: Boolean = false,
 
     val isFetchingWallets: Boolean = false, //remote
     val isCreatingWallet: Boolean = false,
+    val isUpdatingWallet: Boolean = false,
+    val isDeletingWallet: Boolean = false,
 
     val message: String? = null,
 
     val error: String? = null,
-    val createError: String? = null
+    val createError: String? = null,
+    val updateError: String? = null
 )

@@ -1,7 +1,10 @@
-package com.sebastiannarvaez.loginnavigationapp.feature.expenses.presentation.components
+package com.sebastiannarvaez.loginnavigationapp.feature.expenses.presentation.balance.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -20,10 +23,21 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.sebastiannarvaez.loginnavigationapp.core.presentation.utils.toCurrency
 
 @Composable
-fun BalanceCard() {
+fun BalanceCard(
+    balance: Double
+) {
     var isExpanded by remember { mutableStateOf(false) }
+
+    val animatedBalance by animateFloatAsState(
+        targetValue = balance.toFloat(),
+        animationSpec = spring(
+            dampingRatio = Spring.DampingRatioLowBouncy,
+            stiffness = Spring.StiffnessMediumLow
+        )
+    )
 
     Column(
         modifier = Modifier
@@ -40,7 +54,7 @@ fun BalanceCard() {
     ) {
         Text(text = "Total disponible", color = MaterialTheme.colorScheme.onPrimary)
         Text(
-            text = "$ 56,000,000",
+            text = animatedBalance.toDouble().toCurrency(),
             color = MaterialTheme.colorScheme.onPrimary,
             fontWeight = FontWeight.ExtraBold,
             fontSize = 30.sp
@@ -48,7 +62,7 @@ fun BalanceCard() {
 
         AnimatedVisibility(isExpanded) {
             Column() {
-                Text(text = "Total de gatos", color = MaterialTheme.colorScheme.onPrimary)
+                Text(text = "Total de gastos", color = MaterialTheme.colorScheme.onPrimary)
                 Text(
                     text = "Probable saldo final",
                     color = MaterialTheme.colorScheme.onPrimary

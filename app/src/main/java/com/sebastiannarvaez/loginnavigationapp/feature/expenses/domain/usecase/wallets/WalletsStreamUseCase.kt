@@ -1,4 +1,4 @@
-package com.sebastiannarvaez.loginnavigationapp.feature.expenses.domain.usecase
+package com.sebastiannarvaez.loginnavigationapp.feature.expenses.domain.usecase.wallets
 
 import com.sebastiannarvaez.loginnavigationapp.feature.expenses.domain.models.WalletModel
 import com.sebastiannarvaez.loginnavigationapp.feature.expenses.domain.repository.WalletsRepository

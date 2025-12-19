@@ -6,7 +6,9 @@ import com.sebastiannarvaez.loginnavigationapp.feature.expenses.data.local.entit
 import com.sebastiannarvaez.loginnavigationapp.feature.expenses.data.remote.api.WalletsApiService
 import com.sebastiannarvaez.loginnavigationapp.feature.expenses.data.remote.responses.toEntity
 import com.sebastiannarvaez.loginnavigationapp.feature.expenses.domain.models.CreateWalletModel
+import com.sebastiannarvaez.loginnavigationapp.feature.expenses.domain.models.UpdateWalletModel
 import com.sebastiannarvaez.loginnavigationapp.feature.expenses.domain.models.WalletModel
+import com.sebastiannarvaez.loginnavigationapp.feature.expenses.domain.models.toEntity
 import com.sebastiannarvaez.loginnavigationapp.feature.expenses.domain.models.toRequest
 import com.sebastiannarvaez.loginnavigationapp.feature.expenses.domain.repository.WalletsRepository
 import com.sebastiannarvaez.todoappofflinefirst.data.utils.ErrorMapper
@@ -28,6 +30,7 @@ class WalletsRepositoryImp @Inject constructor(
     override suspend fun getAllWallets(): Result<Unit> {
         try {
             val wallets = walletApi.getAllWallets().map { it.toEntity() }
+            walletDao.deleteAllWallets() //clean old cache
             walletDao.insertManyWallets(wallets)
             return Result.success(Unit)
         } catch (e: Exception) {
@@ -45,6 +48,37 @@ class WalletsRepositoryImp @Inject constructor(
 
             walletDao.insertManyWallets(result.map { it.toEntity() })
 
+            return Result.success(Unit)
+        } catch (e: Exception) {
+            return Result.failure(errorMapper.map(e))
+        }
+    }
+
+    override suspend fun updateWallet(
+        walletId: String, wallet: UpdateWalletModel
+    ): Result<Unit> {
+        try {
+            val idToFilter = "eq.$walletId"
+            val result = walletApi.updateWallet(id = idToFilter, wallet = wallet.toRequest())
+
+            if (result.isEmpty()) {
+                return Result.failure(DomainError.ApiError("Ocurrio un error al actualizar la billetera :("))
+            }
+
+            val updatedWallets = result.map { it.toEntity() }
+            walletDao.insertManyWallets(updatedWallets)
+
+            return Result.success(Unit)
+        } catch (e: Exception) {
+            return Result.failure(errorMapper.map(e))
+        }
+    }
+
+    override suspend fun deleteWallet(wallet: WalletModel): Result<Unit> {
+        try {
+            val idToFilter = "eq.${wallet.id}"
+            walletApi.deleteWallet(idToFilter)
+            walletDao.deleteWallet(wallet.toEntity())
             return Result.success(Unit)
         } catch (e: Exception) {
             return Result.failure(errorMapper.map(e))

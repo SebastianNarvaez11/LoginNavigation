@@ -8,10 +8,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -21,21 +23,28 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.sebastiannarvaez.loginnavigationapp.feature.expenses.presentation.components.BalanceCard
+import com.sebastiannarvaez.loginnavigationapp.feature.expenses.presentation.balance.BalanceViewModel
+import com.sebastiannarvaez.loginnavigationapp.feature.expenses.presentation.balance.components.BalanceCard
 import com.sebastiannarvaez.loginnavigationapp.feature.expenses.presentation.expenses.components.CreateExpenseFAB
+import com.sebastiannarvaez.loginnavigationapp.feature.expenses.presentation.expenses.components.ExpenseItemCard
 import com.sebastiannarvaez.loginnavigationapp.feature.expenses.presentation.wallets.components.WalletList
 import com.sebastiannarvaez.loginnavigationapp.feature.expenses.presentation.wallets.WalletViewModel
 import com.sebastiannarvaez.loginnavigationapp.feature.expenses.presentation.wallets.components.WalletForm
 
 @Composable
 fun ExpensesHomeScreen(
+    balanceVM: BalanceViewModel = hiltViewModel(),
     walletVM: WalletViewModel = hiltViewModel(),
     onShowSnackbar: suspend (message: String) -> Unit
 ) {
+    val balanceUiState by balanceVM.uiState.collectAsStateWithLifecycle()
+    val balance by balanceVM.balanceStream.collectAsStateWithLifecycle()
 
     val walletUiState by walletVM.uiState.collectAsStateWithLifecycle()
     val walletFormState by walletVM.formState.collectAsStateWithLifecycle()
@@ -51,7 +60,7 @@ fun ExpensesHomeScreen(
 
     Box(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.fillMaxSize()) {
-            BalanceCard()
+            BalanceCard(balance = balance)
 
             AnimatedVisibility(!walletUiState.showAddWallet && walletUiState.selectedWallet == null) {
                 Row(
@@ -99,7 +108,7 @@ fun ExpensesHomeScreen(
                                 onBalanceChange = walletVM::handleBalanceChange,
                                 onBalanceFocusChange = walletVM::handleBalanceFocusChange,
                                 onClose = { walletVM.setShowAddWallet(false) },
-                                onSave = walletVM::createWallet,
+                                onSave = walletVM::onCreateWallet,
                                 isLoading = walletUiState.isCreatingWallet,
                                 error = walletUiState.createError
                             )
@@ -117,15 +126,20 @@ fun ExpensesHomeScreen(
                             onNameChange = walletVM::handleNameChange,
                             onNameFocusChange = walletVM::handleNameFocusChange,
                             onBalanceChange = walletVM::handleBalanceChange,
-                            onBalanceFocusChange = walletVM::handleBalanceFocusChange
+                            onBalanceFocusChange = walletVM::handleBalanceFocusChange,
+                            onSave = walletVM::onUpdateWallet,
+                            isUpdatingWallet = walletUiState.isUpdatingWallet,
+                            updateWalletError = walletUiState.updateError,
+                            onLongPressWallet = walletVM::startDeleteMode,
+                            onDelete = walletVM::onDeleteWallet,
+                            isDeleteModeActive = walletUiState.isDeleteModeActive,
+                            isDeletingWallet = walletUiState.isDeletingWallet
                         )
-
                     }
                 }
             }
-
-//            Text(text = "Gastos")
         }
+        ExpenseItemCard()
 
         CreateExpenseFAB(modifier = Modifier.align(Alignment.BottomEnd))
     }

@@ -3,6 +3,7 @@ package com.sebastiannarvaez.loginnavigationapp.core.di
 import android.content.Context
 import androidx.room.Room
 import com.sebastiannarvaez.loginnavigationapp.core.data.local.AppDatabase
+import com.sebastiannarvaez.loginnavigationapp.feature.expenses.data.local.dao.BalanceDao
 import com.sebastiannarvaez.loginnavigationapp.feature.expenses.data.local.dao.WalletDao
 import com.sebastiannarvaez.loginnavigationapp.feature.posts.data.local.dao.PostDao
 import dagger.Module
@@ -35,5 +36,11 @@ object DatabaseModule {
     @Singleton
     fun provideWalletDao(db: AppDatabase): WalletDao {
         return db.walletDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideBalanceDao(db: AppDatabase): BalanceDao {
+        return db.balanceDao()
     }
 }
