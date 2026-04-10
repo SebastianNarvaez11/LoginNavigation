@@ -138,8 +138,10 @@ fun ExpensesHomeScreen(
                     }
                 }
             }
+
+
+            ExpenseItemCard()
         }
-        ExpenseItemCard()
 
         CreateExpenseFAB(modifier = Modifier.align(Alignment.BottomEnd))
     }

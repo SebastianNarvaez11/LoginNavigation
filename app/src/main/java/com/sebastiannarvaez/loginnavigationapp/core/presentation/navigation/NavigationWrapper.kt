@@ -46,7 +46,7 @@ fun NavigationWrapper(
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = Destinations.Expenses,
+            startDestination = Destinations.Home,
             modifier = Modifier
                 .padding(innerPadding)
                 .fillMaxSize()
