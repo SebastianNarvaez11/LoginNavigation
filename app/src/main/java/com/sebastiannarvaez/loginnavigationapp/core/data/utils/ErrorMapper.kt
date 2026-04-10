@@ -31,17 +31,16 @@ class ErrorMapper @Inject constructor(private val json: Json) {
     }
 
     private fun mapHttpError(e: HttpException): DomainError.ApiError {
-        val errorBody = e.response()?.errorBody()?.string()
-        val errorResponse = json.decodeFromString<SupabaseErrorResponse>(errorBody ?: "")
+        val errorBody = e.response()?.errorBody()?.string() ?: ""
+        Log.e("SupabaseErrorTag", errorBody)
 
         return try {
-            Log.e("SupabaseErrorTag", errorBody ?: "")
+            val errorResponse = json.decodeFromString<SupabaseErrorResponse>(errorBody)
             val message = errorResponse.message ?: errorResponse.msg ?: "Error de api desconocido"
             val hint = errorResponse.hint?.let { "\nSugerencia: $it" } ?: ""
-
             DomainError.ApiError("$message. $hint")
         } catch (jsonError: Exception) {
-            DomainError.ApiError("Error: ${jsonError.message}, No se pudo interpretar el error de Supabase.")
+            DomainError.ApiError("Error HTTP ${e.code()}: $errorBody")
         }
     }
 }
